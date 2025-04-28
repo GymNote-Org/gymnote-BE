@@ -37,5 +37,5 @@ out/
 .vscode/
 
 ### Secret Properties ###
-!**/main/resources/*.yml
-!**/main/resources/*.properties
+src/main/resources/*.yml
+src/main/resources/*.properties

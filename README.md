@@ -15,6 +15,7 @@
 - Java 17
 - PostgreSQL
 - OAuth2
+- Docker
 - GitHub Action
 
 ## 🚀 설치 및 실행하기

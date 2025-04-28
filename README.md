@@ -1,6 +1,6 @@
 # GymNote - Backend Service Part
 ## 💪 프로젝트 소개
-**운동 루틴을 기록하고 지역별 운동 게시판을 통해 함께 운동 커뮤니티를 형성하는 앱 `GymNote`**
+**세상에서 가장 쉬운 운동기록 앱 `GymNote`**
 
 > 나만의 운동 루틴을 설정해 진행한 운동을 기록해보세요.  
 > 지역별 운동 커뮤니티 게시판에서 서로 소통할 수 있는 운동 루틴 기록 및 커뮤니티 앱입니다.
@@ -34,6 +34,8 @@ erDiagram
     Member {
         varchar(100) email PK "이메일"
         varchar(255) name "이름"
+        varchar(20) oauthProvider UK "OAUTH 제공자"
+        varchar(100) oauthId UK "OAUTH 고유ID"
         timestamp createdDate "최초가입일자"
         timestamp lastLoginDate "최근로그인일자"
     }
@@ -56,7 +58,7 @@ erDiagram
 
     Record {
         bigint recordId PK "운동기록ID"
-        varchar(100) email "이메일"
+        varchar(100) email "회원이메일"
         bigint routineId "루틴ID"
         timestamp recordDate "운동완료일자"
     }
@@ -65,4 +67,33 @@ erDiagram
     Routine ||--|{ Exercise : 1n
 ```
 
-### 운동 커뮤니티 게시글 ERD
+### 운동 커뮤니티 게시글 ERD (기획 중)
+```mermaid
+erDiagram
+    Member {
+        varchar(100) email PK "이메일"
+        varchar(255) name "이름"
+        varchar(20) oauthProvider UK "OAUTH 제공자"
+        varchar(100) oauthId UK "OAUTH 고유ID"
+        timestamp createdDate "최초가입일자"
+        timestamp lastLoginDate "최근로그인일자"
+    }
+
+    Board {
+        bigint boardId PK "게시글ID"
+        varchar(100) email FK "회원이메일"
+        text content "게시글내용"
+        int hits "조회수"
+        timestamp createdDate "최초등록일자"
+        timestamp lastModifiedDate "최근수정일자"
+    }
+
+    BoardImage {
+        bigint imageId PK "게시글이미지ID"
+        bigint boardId FK "게시글ID"
+        text imagePath "이미지저장경로"
+    }
+
+    Member ||--o{ Board : 1n
+    Board ||--|{ BoardImage : 1n
+```

@@ -15,9 +15,20 @@
 - Java 17
 - PostgreSQL
 - OAuth2
+- Docker
 - GitHub Action
 
 ## 🚀 설치 및 실행하기
+### 로컬 개발환경 실행
+```
+# 사전에 Docker Desktop 설치 필요
+# docker-compose로 구성된 컨테이너 빌드 및 실행
+gymnote-BE > docker compose up -d
+
+# Docker 이미지 빌드 및 실행
+gymnote-BE > docker build -t gymnote .
+gymnote-BE > docker run -p 8080:8080 -e JAVA_OPTS=-Dspring.profiles.active=local gymnote
+```
 
 ## ✨ 주요 기능
 - 나만의 운동 루틴을 추가 및 편집한다.

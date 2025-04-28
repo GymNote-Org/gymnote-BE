@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:17
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data  # PostgreSQL 영속성을 위한 볼륨 매핑
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: local

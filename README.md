@@ -74,8 +74,19 @@ erDiagram
         timestamp recordDate "운동완료일자"
     }
 
+    Status {
+        bigint statusId PK "회원상태ID"
+        varchar(100) email FK "회원이메일"
+        varchar(30) goals "운동목표"
+        int currentWeight "현재체중(kg)"
+        int goalsWeight "목표체중(kg)"
+        int skeletalMuscle "골격근량(kg)"
+        int fatRate "체지방량(%)"
+    }
+
     Member ||--o{ Routine : 1n
     Routine ||--|{ Exercise : 1n
+    Member ||--|| Status : 11
 ```
 
 ### 운동 커뮤니티 게시글 ERD (기획 중)

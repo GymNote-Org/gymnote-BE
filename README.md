@@ -14,7 +14,6 @@
 - Spring Boot 2.7.18
 - Java 17
 - PostgreSQL
-- OAuth2
 - Docker
 - GitHub Action
 
@@ -30,16 +29,41 @@ gymnote-BE > docker build -t gymnote .
 gymnote-BE > docker run -p 8080:8080 -e JAVA_OPTS=-Dspring.profiles.active=local gymnote
 ```
 
+## 🗂 프로젝트 구조
+### 루틴 도메인 예시
+```
+프로젝트 구조는 계층형, 개발 방법론은 DDD 따름
+
+gymnote-BE
+├── routine
+│   ├── application
+│   │   ├── RoutineService.java
+│   │   └── dto
+│   │       ├── CreateRoutineRequest.java
+│   │       └── RoutineResponse.java
+│   ├── domain
+│   │   ├── Routine.java
+│   │   ├── Exercise.java
+│   │   └── RoutineRepository.java  ⬅️ 인터페이스
+│   ├── infrastructure
+│   │   └── RoutineRepositoryImpl.java  ⬅️ 구현체
+│   └── presentation
+│       └── RoutineController.java
+└── shared
+    └── BaseEntity.java
+```
+
 ## ✨ 주요 기능
 - 나만의 운동 루틴을 추가 및 편집한다.
 - 오늘 일자로 선택한 루틴에 해당하는 운동을 기록한다.
 - 운동 기록이 완료된 일자는 오늘의 운동 완료한 날로 기록된다.
-- 운동 커뮤니티의 게시글을 조회할 수 있다.
-- 운동 커뮤니티에 게시글을 작성할 수 있다.
-- 내가 작성한 운동 커뮤니티의 게시글을 수정 및 삭제할 수 있다.
+- 그동안 수행해 온 운동 기록의 운동 볼륨을 차트로 확인할 수 있다.
+- 운동 커뮤니티의 게시글을 조회할 수 있다. (v2)
+- 운동 커뮤니티에 게시글을 작성할 수 있다. (v2)
+- 내가 작성한 운동 커뮤니티의 게시글을 수정 및 삭제할 수 있다. (v2)
 
-## 🗂️ ERD
-### 운동 루틴 기록 ERD
+## 💾 ERD
+### 운동 루틴 기록 ERD (기획 중)
 ```mermaid
 erDiagram
     Member {
@@ -53,6 +77,7 @@ erDiagram
 
     Routine {
         bigint routineId PK "루틴ID"
+        varchar(255) routineName "루틴이름"
         varchar(100) email FK "회원이메일"
     }
 
@@ -74,19 +99,15 @@ erDiagram
         timestamp recordDate "운동완료일자"
     }
 
-    Status {
+    MemberGoals {
         bigint statusId PK "회원상태ID"
         varchar(100) email FK "회원이메일"
         varchar(30) goals "운동목표"
-        int currentWeight "현재체중(kg)"
-        int goalsWeight "목표체중(kg)"
-        int skeletalMuscle "골격근량(kg)"
-        int fatRate "체지방량(%)"
     }
 
     Member ||--o{ Routine : 1n
     Routine ||--|{ Exercise : 1n
-    Member ||--|| Status : 11
+    Member ||--|| MemberGoals : 11
 ```
 
 ### 운동 커뮤니티 게시글 ERD (기획 중)

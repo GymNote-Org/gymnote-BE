@@ -94,9 +94,17 @@ erDiagram
 
     Record {
         bigint recordId PK "운동기록ID"
-        varchar(100) email "회원이메일"
-        bigint routineId "루틴ID"
-        timestamp recordDate "운동완료일자"
+        varchar(100) email FK "회원이메일"
+        varchar(255) routineName "루틴이름"
+        timestamp startDate "운동시작일시"
+        timestamp recordDate "운동완료일시"
+    }
+
+    RecordExercise {
+        bigint recordId FK "운동기록ID"
+        varchar(50) exerciseName "운동이름"
+        varchar(30) exerciseTarget "운동부위"
+        int volumn "운동볼륨"
     }
 
     MemberGoals {
@@ -106,7 +114,9 @@ erDiagram
     }
 
     Member ||--o{ Routine : 1n
-    Routine ||--|{ Exercise : 1n
+    Routine ||--o{ Exercise : 1n
+    Member ||--|{ Record : 1n
+    Record ||--o{ RecordExercise : 1n
     Member ||--|| MemberGoals : 11
 ```
 
